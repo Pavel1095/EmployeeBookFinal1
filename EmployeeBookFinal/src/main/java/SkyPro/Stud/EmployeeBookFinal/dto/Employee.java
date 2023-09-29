@@ -9,7 +9,7 @@ public class Employee {
 
     private String lastName;
 
-    public Employee (String firstName, String lastName){
+    public Employee(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -41,5 +41,13 @@ public class Employee {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
+    }
+
+    public int getDepartment(){
+        return getDepartment();
+    }
+
+    public double getSalary(){
+        return getSalary();
     }
 }
