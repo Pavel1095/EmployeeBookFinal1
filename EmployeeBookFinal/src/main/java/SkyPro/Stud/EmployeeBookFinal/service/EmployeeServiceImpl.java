@@ -4,6 +4,7 @@ import SkyPro.Stud.EmployeeBookFinal.dto.Employee;
 import SkyPro.Stud.EmployeeBookFinal.exception.EmployeeAlreadyAddedException;
 import SkyPro.Stud.EmployeeBookFinal.exception.EmployeeNotFoundException;
 import SkyPro.Stud.EmployeeBookFinal.exception.EmployeeStorageIsFullException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,11 +26,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employees.size() == EMPLOYEES_SIZE){
             throw new EmployeeStorageIsFullException();
         }
-        Employee employee = new Employee (firstName, lastName);
+        Employee employee = new Employee (
+                StringUtils.capitalize(firstName),
+                StringUtils.capitalize(lastName));
 
         if (employees.contains(employee)){
             throw new EmployeeAlreadyAddedException();
         }
+
         employees.add(employee);
 
         return employee;
