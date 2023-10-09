@@ -1,6 +1,8 @@
 package SkyPro.Stud.EmployeeBookFinal.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 
 public class Employee {
@@ -9,9 +11,15 @@ public class Employee {
 
     private String lastName;
 
-    public Employee(String firstName, String lastName) {
+    private int department;
+
+    private double salary;
+
+    public Employee(String firstName, String lastName, int department, double salary) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.department = department;
+        this.salary = salary;
     }
 
     public String getFirstName() {
@@ -20,6 +28,18 @@ public class Employee {
 
     public String getLastName() {
         return lastName;
+    }
+    public int getDepartment(){
+        return department;
+    }
+
+    public double getSalary(){
+        return salary;
+    }
+
+    @JsonIgnore
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
     @Override
@@ -43,11 +63,4 @@ public class Employee {
                 '}';
     }
 
-    public int getDepartment(){
-        return getDepartment();
-    }
-
-    public double getSalary(){
-        return getSalary();
-    }
 }

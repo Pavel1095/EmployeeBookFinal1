@@ -3,6 +3,7 @@ package SkyPro.Stud.EmployeeBookFinal.controller;
 import SkyPro.Stud.EmployeeBookFinal.dto.Employee;
 import SkyPro.Stud.EmployeeBookFinal.service.DepartmentService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/department")
 public class DepartmentController {
     private DepartmentService departmentService;
 
