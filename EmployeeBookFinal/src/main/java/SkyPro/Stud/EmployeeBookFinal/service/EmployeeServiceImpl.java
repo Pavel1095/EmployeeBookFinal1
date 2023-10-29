@@ -13,6 +13,7 @@ import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
+
     private final Map<String, Employee> employees;
 
     private static final int EMPLOYEES_SIZE = 3;
@@ -23,46 +24,50 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employees = new HashMap<>();
     }
 
-
     @Override
-    public Employee addEmployee(String firstName, String lastName) {
-        return null;
-    }
-
-    @Override
-    public Employee addEmployeeFull(String firstName, String lastName, int department, double salary){
-        if (employees.size() == EMPLOYEES_SIZE){
+    public Employee addEmployeeFull(String firstName, String lastName, int department, double salary) {
+        if (employees.size() == EMPLOYEES_SIZE) {
             throw new EmployeeStorageIsFullException();
         }
-        Employee employee = new Employee (
-                StringUtils.capitalize(firstName),
-                StringUtils.capitalize(lastName),
+
+        String capitalizedFirstName = StringUtils.capitalize(firstName);
+        String capitalizedLastName = StringUtils.capitalize(lastName);
+        Employee employee = new Employee(
+                capitalizedFirstName,
+                capitalizedLastName,
                 department,
                 salary);
 
-        if (employees.containsKey(employee)){
+        String key = getKey(capitalizedFirstName, capitalizedLastName);
+
+        if (employees.containsKey(key)) {
             throw new EmployeeAlreadyAddedException();
         }
-            return employee;
-    }
 
-    @Override
-    public Employee remoteEmployee(String firstName, String lastName){
-        Employee employee = getEmployee(firstName, lastName);
-        employees.remove(employee.getFullName());
+        employees.put(key, employee);
+
         return employee;
     }
 
     @Override
-    public Employee getEmployee(String firstName, String lastName){
-        String fullNameKey = firstName + " " + lastName;
-        if (!employees.containsKey(fullNameKey)){
+    public Employee removeEmployee(String firstName, String lastName) {
+        return employees.remove(getKey(firstName, lastName));
+    }
+
+    @Override
+    public Employee getEmployee(String firstName, String lastName) {
+        String fullNameKey = getKey(firstName, lastName);
+        if (!employees.containsKey(fullNameKey)) {
             throw new EmployeeNotFoundException();
         }
         return employees.get(fullNameKey);
     }
 
-    public Collection<Employee> findAll(){
+    private static String getKey(String firstName, String lastName) {
+        return firstName + " " + lastName;
+    }
+
+    public Collection<Employee> findAll() {
         return employees.values();
     }
 }

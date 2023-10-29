@@ -21,25 +21,26 @@ public class EmployeeController {
     }
 
     @GetMapping("/add")
-    public Employee addEmployee (@RequestParam String firstName, @RequestParam String lastName){
+    public Employee addEmployee (@RequestParam String firstName, @RequestParam String lastName,
+                                 @RequestParam(required = false, defaultValue = "0") Integer department,
+                                 @RequestParam(required = false, defaultValue = "0") Double salary){
         EmployeeNameValidator.validaIsAlpha(firstName, lastName);
-        return employeeService.addEmployee(firstName, lastName);
+        return employeeService.addEmployeeFull(firstName, lastName, department, salary);
     }
 
     @GetMapping("/remove")
-    public Employee remoteEmployee (@RequestParam String firstName, @RequestParam String lastName){
-        EmployeeNameValidator.validaIsAlpha(firstName, lastName);
-        return employeeService.addEmployee(firstName, lastName);
+    public Employee remove(@RequestParam String firstName, @RequestParam String lastName){
+        return employeeService.removeEmployee(firstName, lastName);
     }
 
     @GetMapping("/find")
     public Employee getEmployee (@RequestParam String firstName, @RequestParam String lastName){
         EmployeeNameValidator.validaIsAlpha(firstName, lastName);
-        return employeeService.addEmployee(firstName, lastName);
+        return employeeService.getEmployee(firstName, lastName);
     }
 
     @GetMapping
     public Collection<Employee> findAll(){
-        return (Collection<Employee>) employeeService.findAll();
+        return employeeService.findAll();
     }
 }

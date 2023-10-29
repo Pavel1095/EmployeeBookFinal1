@@ -30,7 +30,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Employee minSalaryEmployee(int department) {
-        return null;
+        return employeeService.findAll().stream()
+                .filter(employee -> employee.getDepartment() == department)
+                .min(Comparator.comparingDouble(empl -> empl.getSalary()))
+                .orElseThrow(() -> new EmployeeNotFoundException());
     }
 
     @Override
